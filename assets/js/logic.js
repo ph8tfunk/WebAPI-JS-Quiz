@@ -1,3 +1,15 @@
+var quiz = [{
+
+    Question: 1,
+    choices: ["a","b","c","d"],
+    answer: "b"
+},
+{
+Question: 2,
+    choices: ["a","b","c","d"],
+    answer: "a"
+}]
+
 
 var question = document.getElementById("question-title");
 var questions = document.getElementById("questions");
