@@ -13,7 +13,7 @@ Question: 2,
 
 var question = document.getElementById("question-title");
 var questions = document.getElementById("questions");
-var questions = document.getElementById("questions");
+
 
 var quizTimer = document.getElementById("time");
 
@@ -36,7 +36,7 @@ var startScreen = document.getElementById("start-screen");
 
 
 
-startScreen.addEventListener("click", function(){
+startScreen.addEventListener("click", function(event){
 
     startScreen.setAttribute("class", "hide");
     
@@ -63,3 +63,16 @@ function startCountdown(){
     
     }, 1000 );
 }
+
+//event to target the button choice
+
+choices.addEventListener("click", function(event){
+    var element = event.target;
+    console.log(element);
+
+});
+
+
+
+
+
