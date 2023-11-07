@@ -1,6 +1,11 @@
-var quiz = {
+var quiz = [{
 
     Question: 1,
-    answer: ["a","b","c","d"]
-
-}
+    choices: ["a","b","c","d"],
+    answer: "b"
+},
+{
+Question: 2,
+    choices: ["a","b","c","d"],
+    answer: "a"
+}]
