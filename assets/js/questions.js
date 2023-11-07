@@ -4,4 +4,3 @@ var quiz = {
     answer: ["a","b","c","d"]
 
 }
-
