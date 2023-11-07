@@ -24,7 +24,6 @@ var questionNumber = 0;
 
 function renderQuiz(qNumber){
 
-    
     questionTitle.textContent = quiz[qNumber].question;
     //load questions
     quiz[qNumber].choices.forEach(element => {
@@ -34,8 +33,6 @@ function renderQuiz(qNumber){
         button.textContent = element;
         choice.appendChild(button);
     });
-    
-
 
 }
 var startScreen = document.getElementById("start-screen");
@@ -60,8 +57,9 @@ function startCountdown(){
     var timer = setInterval(function(){
 
         startTime--;
-        quizTimer.textContent = startTime;
-    
+        //quizTimer.textContent = startTime;
+        setTimer();
+
         if (startTime==0){
             clearInterval(timer);
             //end quiz
@@ -75,7 +73,7 @@ function startCountdown(){
 choices.addEventListener("click", function(event){
     var element = event.target;
     console.log(element);
-    //is correct
+    validateAnswer(element);
     //load next question only if correct ese sunbtract timer
 
 });
@@ -84,4 +82,39 @@ choices.addEventListener("click", function(event){
 //end quiz
 //save initials and score
 
+function validateAnswer(userChoice){
 
+    if (userChoice.textContent == quiz[questionNumber].answer) {
+
+        console.log("Correct answer");
+        addPoints();
+        //load next question
+
+    } else {
+        console.log("guess again");
+        deductPoints();
+        //
+    }
+
+}
+
+function addPoints(){
+
+    startTime+=10;
+    setTimer();
+
+}
+
+function deductPoints(){
+
+    if (startTime >10){
+        startTime-=10;
+        setTimer();
+    } else {
+        //end quiz
+    }
+}
+
+function setTimer(){
+    quizTimer.textContent = startTime;
+}
