@@ -20,7 +20,7 @@ var endScreen = document.getElementById("end-screen")
 
 var quizTimer = document.getElementById("time");
 var finalScore = document.getElementById("final-score");
-var userInitals = document.getElementById("initials");
+var userInitials = document.getElementById("initials");
 var submit = document.getAnimations("submit");
 
 var startTime = 15; // test value, default 75;
@@ -48,6 +48,10 @@ function renderQuiz(qNumber){
         });
     } else {
         console.log("***END**" + quiz.length);
+        score = startTime;
+        startTime = 1;
+        
+    questions.setAttribute("class", "hide");
         //end quiz
     }
 }
@@ -148,7 +152,7 @@ endScreen.addEventListener("click", function(event){
 
     event.preventDefault();
 
-    userStats = { "inital": userInitals.value, "score": score };
-    localStorage.setItem("QuizSatsWork", JSON.stringify(userStats));
+    userStats = { initial: userInitials.value, score: score };
+    localStorage.setItem("QuizStats", JSON.stringify(userStats));
 
 });
