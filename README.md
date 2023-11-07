@@ -7,8 +7,9 @@ This website is a Question Quiz on JavaScript.
 
 ## Screenshot
 
+<img src="./assets/images/web-apis-challenge-demo.gif">
 
-
+<a href="https://ph8tfunk.github.io/WebAPI-JS-Quiz/"> Quiz Website </a>
 
 ## Installation
 N/A
