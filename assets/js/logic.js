@@ -11,31 +11,47 @@ var quiz = [{
 }]
 
 
-var questionTitle = document.getElementById("question-title");
 var questions = document.getElementById("questions");
+
+var questionTitle = document.getElementById("question-title");
 var choice = document.getElementById("choices");
+
 var endScreen = document.getElementById("end-screen")
 
 var quizTimer = document.getElementById("time");
+var finalScore = document.getElementById("final-score");
+var userInitals = document.getElementById("initials");
+var submit = document.getAnimations("submit");
 
 var startTime = 15; // test value, default 75;
 var questionNumber = 0;
+var score = 0;
 
 //console.log(question);
 
 function renderQuiz(qNumber){
 
-    questionTitle.textContent = quiz[qNumber].question;
-    //load questions
-    quiz[qNumber].choices.forEach(element => {
-        quizTimer.textContent = startTime;
-        var button = document.createElement("button");
-        button.setAttribute("class", "choices");
-        button.textContent = element;
-        choice.appendChild(button);
-    });
+    if (qNumber < quiz.length){
+        while (choice.firstChild) {
+            choice.removeChild(choice.firstChild);
+        }
 
+        questionTitle.textContent = quiz[qNumber].question;
+        //load questions
+        console.log(qNumber);
+        quiz[qNumber].choices.forEach(element => {
+            quizTimer.textContent = startTime;
+            var button = document.createElement("button");
+            button.setAttribute("class", "choices");
+            button.textContent = element;
+            choice.appendChild(button);
+        });
+    } else {
+        console.log("***END**" + quiz.length);
+        //end quiz
+    }
 }
+
 var startScreen = document.getElementById("start-screen");
 
 
@@ -71,17 +87,14 @@ function startCountdown(){
 
 //event to target the button choice
 
-choices.addEventListener("click", function(event){
+choice.addEventListener("click", function(event){
     var element = event.target;
     console.log(element);
-    validateAnswer(element);
-    //load next question only if correct ese sunbtract timer
+    if (validateAnswer(element)){
+        renderQuiz(questionNumber+=1);
+    };
 
 });
-
-
-//end quiz
-//save initials and score
 
 function validateAnswer(userChoice){
 
@@ -89,6 +102,7 @@ function validateAnswer(userChoice){
 
         console.log("Correct answer");
         addPoints();
+        return true;
         //load next question
 
     } else {
@@ -125,5 +139,16 @@ function endQuiz(){
 
     questions.setAttribute("class", "hide");
     endScreen.setAttribute("class", "start");
+    finalScore.textContent = score;
+    // update score for final value
 
 }
+
+endScreen.addEventListener("click", function(event){
+
+    event.preventDefault();
+
+    userStats = { "inital": userInitals.value, "score": score };
+    localStorage.setItem("QuizSatsWork", JSON.stringify(userStats));
+
+});
