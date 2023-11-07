@@ -7,5 +7,12 @@ function renderQuiz(){
 
 
 }
+var startScreen = document.getElementById("start-screen");
 
 renderQuiz();
+
+startScreen.addEventListener("click", function(){
+
+    startScreen.setAttribute("class", "hide");
+
+});
