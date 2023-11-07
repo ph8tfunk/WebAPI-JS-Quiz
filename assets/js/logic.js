@@ -15,6 +15,10 @@ var question = document.getElementById("question-title");
 var questions = document.getElementById("questions");
 var questions = document.getElementById("questions");
 
+var quizTimer = document.getElementById("time");
+
+var startTime = 15; // test value, default 75;
+
 console.log(question);
 
 function renderQuiz(){
@@ -22,6 +26,7 @@ function renderQuiz(){
     question.textContent = ("Question 1");
     var button = document.createElement("button");
     var choice = document.getElementById("choices");
+    quizTimer.textContent = startTime;
     button.setAttribute("class", "choices");
     button.textContent = "answer a";
     choice.appendChild(button);
@@ -29,7 +34,7 @@ function renderQuiz(){
 }
 var startScreen = document.getElementById("start-screen");
 
-renderQuiz();
+
 
 startScreen.addEventListener("click", function(){
 
@@ -37,5 +42,24 @@ startScreen.addEventListener("click", function(){
     
     questions.setAttribute("class", "start");
     // questions.setAttribute("style", "display:unset");
+    //start timer
+    startCountdown();
+    renderQuiz();
+
 
 });
+
+function startCountdown(){
+
+    var timer = setInterval(function(){
+
+        startTime--;
+        quizTimer.textContent = startTime;
+    
+        if (startTime==0){
+            clearInterval(timer);
+            //end quiz
+        }
+    
+    }, 1000 );
+}
