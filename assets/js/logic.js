@@ -14,6 +14,7 @@ var quiz = [{
 var questionTitle = document.getElementById("question-title");
 var questions = document.getElementById("questions");
 var choice = document.getElementById("choices");
+var endScreen = document.getElementById("end-screen")
 
 var quizTimer = document.getElementById("time");
 
@@ -62,7 +63,7 @@ function startCountdown(){
 
         if (startTime==0){
             clearInterval(timer);
-            //end quiz
+            endQuiz();
         }
     
     }, 1000 );
@@ -111,10 +112,18 @@ function deductPoints(){
         startTime-=10;
         setTimer();
     } else {
-        //end quiz
+        startTime=1;
+        quizTimer.textContent = 1;
     }
 }
 
 function setTimer(){
     quizTimer.textContent = startTime;
+}
+
+function endQuiz(){
+
+    questions.setAttribute("class", "hide");
+    endScreen.setAttribute("class", "start");
+
 }
