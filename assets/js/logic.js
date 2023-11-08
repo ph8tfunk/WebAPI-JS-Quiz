@@ -49,7 +49,8 @@ var endScreen = document.getElementById("end-screen")
 var quizTimer = document.getElementById("time");
 var finalScore = document.getElementById("final-score");
 var userInitials = document.getElementById("initials");
-var submit = document.getAnimations("submit");
+
+var submitBtn = document.getElementById("submit");
 
 var startTime = 15; // test value, default 75;
 var questionNumber = 0;
@@ -178,11 +179,12 @@ function endQuiz(){
 
 }
 
-endScreen.addEventListener("click", function(event){
+submitBtn.addEventListener("click", function(event){
 
     event.preventDefault();
 
     userStats = { initial: userInitials.value, score: score };
     localStorage.setItem("QuizStats", JSON.stringify(userStats));
+    location.replace("./highscores.html");
 
 });
