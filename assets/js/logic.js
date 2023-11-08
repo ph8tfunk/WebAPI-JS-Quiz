@@ -1,3 +1,5 @@
+// question object
+
 var quiz = [{
 
     question: "Inside which HTML element do we put the JavaScript?",
@@ -36,30 +38,32 @@ var quiz = [{
 }
 ]
 
+// set audio for answer feedback
 const correctAudio = new Audio(scr="./assets/sfx/correct.wav");
 const wrongAudio = new Audio("./assets/sfx/incorrect.wav")
 
+// get all elements required for manipulation
 var questions = document.getElementById("questions");
-
 var questionTitle = document.getElementById("question-title");
 var choice = document.getElementById("choices");
-
 var endScreen = document.getElementById("end-screen")
-
 var quizTimer = document.getElementById("time");
 var finalScore = document.getElementById("final-score");
 var userInitials = document.getElementById("initials");
-
 var submitBtn = document.getElementById("submit");
+var feedbackText = document.getElementById("feedback");
+var startScreen = document.getElementById("start-screen");
 
-var startTime = 15; // test value, default 75;
+// default values for timers and questions
+var startTime = 75;
 var questionNumber = 0;
 var score = 0;
+var feedbackTime = 1;
 
-//console.log(question);
 
 function renderQuiz(qNumber){
 
+    //remove all elements from last question
     if (qNumber < quiz.length){
         while (choice.firstChild) {
             choice.removeChild(choice.firstChild);
@@ -67,7 +71,6 @@ function renderQuiz(qNumber){
 
         questionTitle.textContent = quiz[qNumber].question;
         //load questions
-        console.log(qNumber);
         quiz[qNumber].choices.forEach(element => {
             quizTimer.textContent = startTime;
             var button = document.createElement("button");
@@ -76,17 +79,14 @@ function renderQuiz(qNumber){
             choice.appendChild(button);
         });
     } else {
-        console.log("***END**" + quiz.length);
         score = startTime;
         startTime = 1;
         
     questions.setAttribute("class", "hide");
-        //end quiz
+    endQuiz();
+    
     }
 }
-
-var startScreen = document.getElementById("start-screen");
-
 
 
 startScreen.addEventListener("click", function(event){
@@ -94,8 +94,6 @@ startScreen.addEventListener("click", function(event){
     startScreen.setAttribute("class", "hide");
     
     questions.setAttribute("class", "start");
-    // questions.setAttribute("style", "display:unset");
-    //start timer
     startCountdown();
     renderQuiz(questionNumber);
 
@@ -107,7 +105,6 @@ function startCountdown(){
     var timer = setInterval(function(){
 
         startTime--;
-        //quizTimer.textContent = startTime;
         setTimer();
 
         if (startTime==0){
@@ -133,17 +130,17 @@ function validateAnswer(userChoice){
 
     if (userChoice.textContent == quiz[questionNumber].answer) {
 
-        console.log("Correct answer");
         addPoints();
+        feedbackCorrect();
         correctAudio.play();
         return true;
-        //load next question
+
 
     } else {
-        console.log("guess again");
+        feedbackWrong();
         wrongAudio.play();
         deductPoints();
-        //
+        
     }
 
 }
@@ -173,6 +170,7 @@ function setTimer(){
 function endQuiz(){
 
     questions.setAttribute("class", "hide");
+    feedbackText.setAttribute("class", "hide");
     endScreen.setAttribute("class", "start");
     finalScore.textContent = score;
     // update score for final value
@@ -188,3 +186,32 @@ submitBtn.addEventListener("click", function(event){
     location.replace("./highscores.html");
 
 });
+
+function feedbackWrong(){
+    feedbackTime = 1;
+    feedbackText.setAttribute("class","start");
+    feedbackText.textContent = "!! Wrong !!";
+    feedbackCountdown();
+}
+
+function feedbackCorrect(){
+    feedbackTime = 1;
+    feedbackText.setAttribute("class","start");
+    feedbackText.textContent = "Correct";
+    feedbackCountdown();
+}
+
+function feedbackCountdown(){
+
+  
+    var feedbackTimer = setInterval(function(){
+
+        feedbackTime--;   
+
+        if (feedbackTime == 0){
+            feedbackText.setAttribute("class", "hide");
+            clearInterval(feedbackTimer);
+        }
+
+    }, 1000 );
+}
