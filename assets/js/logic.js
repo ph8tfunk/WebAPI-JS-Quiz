@@ -36,6 +36,8 @@ var quiz = [{
 }
 ]
 
+const correctAudio = new Audio(scr="./assets/sfx/correct.wav");
+const wrongAudio = new Audio("./assets/sfx/incorrect.wav")
 
 var questions = document.getElementById("questions");
 
@@ -132,11 +134,13 @@ function validateAnswer(userChoice){
 
         console.log("Correct answer");
         addPoints();
+        correctAudio.play();
         return true;
         //load next question
 
     } else {
         console.log("guess again");
+        wrongAudio.play();
         deductPoints();
         //
     }
